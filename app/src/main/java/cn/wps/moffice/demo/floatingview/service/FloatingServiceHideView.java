@@ -29,6 +29,7 @@ import android.widget.Toast;
 import cn.wps.moffice.demo.R;
 import cn.wps.moffice.demo.floatingview.FloatingFunc;
 import cn.wps.moffice.demo.util.Define;
+import cn.wps.moffice.demo.util.IntentUtil;
 import cn.wps.moffice.demo.util.SettingPreference;
 import cn.wps.moffice.service.OfficeService;
 import cn.wps.moffice.service.doc.Document;
@@ -265,8 +266,10 @@ public class FloatingServiceHideView extends Service implements OnClickListener 
 
 	private boolean bindOfficeService() {
 		// bind service
-		final Intent intent = new Intent(Define.OFFICE_SERVICE_ACTION);
+
+		 Intent intent = new Intent(Define.OFFICE_SERVICE_ACTION);
 		intent.putExtra("DisplayView", false);
+		intent = IntentUtil.createExplicitFromImplicitIntent(intent,Define.PACKAGENAME_KING_PRO);
 		if (!bindService(intent, connection, Service.BIND_AUTO_CREATE)) {
 			// bind failed, maybe wps office is not installd yet.
 			unbindService(connection);

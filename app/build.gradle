@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "cn.wps.moffice.demo"
-        minSdkVersion 20
-        targetSdkVersion 22
+        minSdkVersion 10
+        targetSdkVersion 19
     }
 
     buildTypes {

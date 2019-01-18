@@ -3,6 +3,7 @@ package cn.wps.moffice.demo.floatingview.service;
 import java.io.File;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.Service;
@@ -581,11 +582,10 @@ public class FloatingService extends Service implements OnClickListener {
 		// bind service
 		Intent intent = new Intent(Define.PRO_OFFICE_SERVICE_ACTION);
 		intent.putExtra("DisplayView", true);
-		intent = IntentUtil.createExplicitFromImplicitIntent(intent,Define.PACKAGENAME_ENG);// liuyi add
+
 		if (!bindService(intent, connection, Service.BIND_AUTO_CREATE)) {
 			// bind failed, maybe wps office is not installd yet.
 			unbindService(connection);
-			
 			return false;
 		}
 		return true;
@@ -683,6 +683,7 @@ public class FloatingService extends Service implements OnClickListener {
 		}
 	}
 	
+	@SuppressLint("HandlerLeak")
 	private  Handler handler = new Handler(){
 
 		@Override
@@ -710,14 +711,9 @@ public class FloatingService extends Service implements OnClickListener {
 			{
 				isLoadOk = refreshView();
 			}
-			catch (NullPointerException ee)
+			catch (NullPointerException | RemoteException ee)
 			{
 				ee.printStackTrace();
-				mDoc = null;
-			}
-			catch(RemoteException e)
-			{
-				e.printStackTrace();
 				mDoc = null;
 			}
 			if (!isLoadOk){
