@@ -48,6 +48,8 @@ import cn.wps.moffice.service.doc.SaveFormat;
 import cn.wps.moffice.service.doc.WrapType;
 import cn.wps.moffice.service.doc.print.PrintOutItem;
 
+import static cn.wps.moffice.demo.util.Define.PACKAGENAME_ENG;
+
 public class FloatingService extends Service implements OnClickListener {
 
 	private String picSavePath = "/sdcard/test.png";//截图保存路径
@@ -470,8 +472,8 @@ public class FloatingService extends Service implements OnClickListener {
 			intent.setClassName(Define.PACKAGENAME_ENT, Define.CLASSNAME);
 		}else if (checkPackage(Define.PACKAGENAME)){
 			intent.setClassName(Define.PACKAGENAME, Define.CLASSNAME);
-		}else if (checkPackage(Define.PACKAGENAME_ENG)){
-			intent.setClassName(Define.PACKAGENAME_ENG, Define.CLASSNAME);
+		}else if (checkPackage(PACKAGENAME_ENG)){
+			intent.setClassName(PACKAGENAME_ENG, Define.CLASSNAME);
 		}else if (checkPackage(Define.PACKAGENAME_KING_ENT)){
 			intent.setClassName(Define.PACKAGENAME_KING_ENT, Define.CLASSNAME);
 		}else if (checkPackage(Define.PACKAGENAME_KING_PRO)){
@@ -580,7 +582,8 @@ public class FloatingService extends Service implements OnClickListener {
 
 	private boolean bindOfficeService() {
 		// bind service
-		Intent intent = new Intent(Define.PRO_OFFICE_SERVICE_ACTION);
+		Intent intent = new Intent(Define.OFFICE_SERVICE_ACTION);
+		intent.setPackage(PACKAGENAME_ENG);
 		intent.putExtra("DisplayView", true);
 
 		if (!bindService(intent, connection, Service.BIND_AUTO_CREATE)) {
