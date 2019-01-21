@@ -49,7 +49,7 @@ public class Define
 	public static final String PACKAGENAME_ENT = "cn.wps.moffice_ent";	//企业版的包名
 	public static final String PACKAGENAME = "cn.wps.moffice";			//测试用
 	public static final String PACKAGENAME_KING_ENT= "com.kingsoft.moffice_ent";
-	public static final String PACKAGENAME_KING_PRO = "com.kingsoft.moffice_pro";// 专业版
+	public static final String PACKAGENAME_KING_PRO = "com.kingsoft.moffice_pro";// 专业版 cn.wps.moffice.OfficeApp
 	public static final String PACKAGENAME_KING_PRO_HW = "com.kingsoft.moffice_pro_hw";		//华为定制包名
 	
 	public static final String CLASSNAME = "cn.wps.moffice.documentmanager.PreStartActivity2";		//wps类名

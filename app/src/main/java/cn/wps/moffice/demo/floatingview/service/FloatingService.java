@@ -48,7 +48,12 @@ import cn.wps.moffice.service.doc.SaveFormat;
 import cn.wps.moffice.service.doc.WrapType;
 import cn.wps.moffice.service.doc.print.PrintOutItem;
 
+import static cn.wps.moffice.demo.util.Define.CLASSNAME;
+import static cn.wps.moffice.demo.util.Define.CLEAR_TRACE;
 import static cn.wps.moffice.demo.util.Define.PACKAGENAME_ENG;
+import static cn.wps.moffice.demo.util.Define.PACKAGENAME_KING_PRO;
+import static cn.wps.moffice.demo.util.Define.SEND_CLOSE_BROAD;
+import static cn.wps.moffice.demo.util.Define.THIRD_PACKAGE;
 
 public class FloatingService extends Service implements OnClickListener {
 
@@ -469,17 +474,17 @@ public class FloatingService extends Service implements OnClickListener {
 		intent.setAction(android.content.Intent.ACTION_VIEW);
 		
 		if (checkPackage(Define.PACKAGENAME_ENT)){
-			intent.setClassName(Define.PACKAGENAME_ENT, Define.CLASSNAME);
+			intent.setClassName(Define.PACKAGENAME_ENT, CLASSNAME);
 		}else if (checkPackage(Define.PACKAGENAME)){
-			intent.setClassName(Define.PACKAGENAME, Define.CLASSNAME);
+			intent.setClassName(Define.PACKAGENAME, CLASSNAME);
 		}else if (checkPackage(PACKAGENAME_ENG)){
-			intent.setClassName(PACKAGENAME_ENG, Define.CLASSNAME);
+			intent.setClassName(PACKAGENAME_ENG, CLASSNAME);
 		}else if (checkPackage(Define.PACKAGENAME_KING_ENT)){
-			intent.setClassName(Define.PACKAGENAME_KING_ENT, Define.CLASSNAME);
+			intent.setClassName(Define.PACKAGENAME_KING_ENT, CLASSNAME);
 		}else if (checkPackage(Define.PACKAGENAME_KING_PRO)){
-			intent.setClassName(Define.PACKAGENAME_KING_PRO, Define.CLASSNAME);
+			intent.setClassName(Define.PACKAGENAME_KING_PRO, CLASSNAME);
 		}else if (checkPackage(Define.PACKAGENAME_KING_PRO_HW)){
-			intent.setClassName(Define.PACKAGENAME_KING_PRO_HW, Define.CLASSNAME);
+			intent.setClassName(Define.PACKAGENAME_KING_PRO_HW, CLASSNAME);
 		}
 		else
 		{
@@ -583,7 +588,8 @@ public class FloatingService extends Service implements OnClickListener {
 	private boolean bindOfficeService() {
 		// bind service
 		Intent intent = new Intent(Define.OFFICE_SERVICE_ACTION);
-		intent.setPackage(PACKAGENAME_ENG);
+		//intent.setPackage(PACKAGENAME_ENG);
+        intent.setPackage(PACKAGENAME_KING_PRO);
 		intent.putExtra("DisplayView", true);
 
 		if (!bindService(intent, connection, Service.BIND_AUTO_CREATE)) {
@@ -624,10 +630,11 @@ public class FloatingService extends Service implements OnClickListener {
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
  
-			    String 	packageName   	= settingPreference.getSettingParam(Define.THIRD_PACKAGE, getPackageName());
+			    String 	packageName   	= getPackageName();// settingPreference.getSettingParam(THIRD_PACKAGE, getPackageName());
 			    boolean FairCopy        = settingPreference.getSettingParam(Define.FAIR_COPY, true);
-			    String userName         = settingPreference.getSettingParam(Define.USER_NAME, "");
-			
+			    String userName         = "LiuYi_Test";//settingPreference.getSettingParam(Define.USER_NAME, "");
+
+			    /*
 			    bundle.putString(Define.USER_NAME, userName);	
 				bundle.putBoolean(Define.SEND_CLOSE_BROAD, true);       //关闭文件的广播,由于demo的浮窗需要根据关闭广播来关闭，请设置该值为true
 				bundle.putBoolean(Define.FAIR_COPY, FairCopy);
@@ -636,6 +643,17 @@ public class FloatingService extends Service implements OnClickListener {
 				bundle.putBoolean(Define.BACK_KEY_DOWN, settingPreference.getSettingParam(Define.BACK_KEY_DOWN, true));
 				bundle.putBoolean(Define.HOME_KEY_DOWN, settingPreference.getSettingParam(Define.HOME_KEY_DOWN, true));
 				bundle.putBoolean(Define.CACHE_FILE_INVISIBLE, false);    //
+                */
+
+				bundle.putString(Define.USER_NAME,userName);
+
+				bundle.putBoolean(SEND_CLOSE_BROAD, true); // 关闭时是否发送广播
+				bundle.putBoolean(SEND_CLOSE_BROAD, true);// 文件保存时是否发送广播
+				bundle.putString(THIRD_PACKAGE, packageName); // 第三方应用的包名，用于对该应用合法性的验证
+				bundle.putBoolean(CLEAR_TRACE, true);// 清除打开记录
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.setAction(android.content.Intent.ACTION_VIEW);
+				intent.setClassName(PACKAGENAME_ENG, CLASSNAME);
 
 				intent.putExtras(bundle);
 				mDoc = mService.openDocument(path, "", intent);
@@ -665,12 +683,12 @@ public class FloatingService extends Service implements OnClickListener {
 			Intent intent = new Intent();
 			Bundle bundle = new Bundle();
 
-		    String 	packageName   	= settingPreference.getSettingParam(Define.THIRD_PACKAGE, getPackageName());
+		    String 	packageName   	= settingPreference.getSettingParam(THIRD_PACKAGE, getPackageName());
 		    boolean FairCopy        = settingPreference.getSettingParam(Define.FAIR_COPY, true);
 		    String userName         = settingPreference.getSettingParam(Define.USER_NAME, "");
 		
 		    bundle.putString(Define.USER_NAME, userName);	
-			bundle.putBoolean(Define.SEND_CLOSE_BROAD, true);       //关闭文件的广播,由于demo的浮窗需要根据关闭广播来关闭，请设置该值为true
+			bundle.putBoolean(SEND_CLOSE_BROAD, true);       //关闭文件的广播,由于demo的浮窗需要根据关闭广播来关闭，请设置该值为true
 			bundle.putBoolean(Define.CACHE_FILE_INVISIBLE, false);    //
 
 			intent.putExtras(bundle);
